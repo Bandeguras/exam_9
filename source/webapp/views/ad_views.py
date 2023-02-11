@@ -9,7 +9,7 @@ from django.http import JsonResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 
 
-class AddIndexViews(ListView):
+class AdIndexViews(ListView):
     template_name = 'ad/index.html'
     context_object_name = 'ads'
     model = Ad
@@ -17,17 +17,12 @@ class AddIndexViews(ListView):
 
 
 #
-# class ArticleView(DetailView):
-#     template_name = 'article/article_view.html'
-#     model = Article
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         article = self.object
-#         comments = article.comments.order_by('-created_at')
-#         context['comments'] = comments
-#         return context
-#
+class AdView(DetailView):
+    template_name = 'ad/ad_view.html'
+    context_object_name = 'ad'
+    model = Ad
+
+
 #
 #
 # class ArticleCreateView(LoginRequiredMixin, CreateView):

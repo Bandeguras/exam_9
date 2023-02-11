@@ -11,7 +11,7 @@ CATEGORY_CHOICES = [('on moderate', 'На модерацию'), ('published', '�
 
 
 class Ad(models.Model):
-    avatar = models.ImageField(blank=True, null=True, upload_to='user_avatar', verbose_name="Аватар")
+    photo = models.ImageField(blank=True, null=True, upload_to='product_photo', verbose_name="Аватар")
     title = models.CharField(max_length=30, verbose_name="Заголовок")
     description = models.TextField(max_length=3000, verbose_name="Описание", null=True, blank=True)
     user = models.OneToOneField(get_user_model(), on_delete=models.SET_DEFAULT, default=1, related_name='ads',
@@ -25,7 +25,7 @@ class Ad(models.Model):
     published_at = models.DateTimeField(verbose_name="Дата публикации")
 
     def get_absolute_url(self):
-        return reverse('webapp:ad', kwargs={'pk': self.pk})
+        return reverse('webapp:ad_view', kwargs={'pk': self.pk})
 
 
 class Category(models.Model):

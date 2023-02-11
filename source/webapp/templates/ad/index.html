@@ -12,9 +12,11 @@
             <div class="col-4 my-3">
                 <div class="card">
                     <div class="card-body">
+                        <img src="{{ ad.photo.url }}">
                         <h5 class="card-title">Заголовок: {{ ad.title }} </h5>
-                        <p class="card-text">Автор: {{ ad.author }}</p>
-{#                        <a href="{{ add.get_absolute_url }}" class="btn btn-primary">Подробнее...</a>#}
+                        <p class="card-text">Автор: {{ ad.user }}</p>
+                        <p class="card-text">Цена: {{ ad.price }}</p>
+                        <a href="{{ ad.get_absolute_url }}" class="btn btn-primary">Подробнее...</a>
                     </div>
                 </div>
             </div>

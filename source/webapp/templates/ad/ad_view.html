@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="card mb-3">
+        <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="{{ ad.photo.url }}" class="img-fluid rounded-start w-75">
+                </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">Заголовок: {{ ad.title }} </h5>
+                    <p class="card-text">Автор: {{ ad.user }}</p>
+                    <p class="card-text">Описание: {{ ad.description }}</p>
+                    <p class="card-text">Категория: {{ ad.category }}</p>
+                    <p class="card-text">Дата создание: {{ ad.created_at }}</p>
+                    <p class="card-text">Цена: {{ ad.price }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
