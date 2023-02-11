@@ -1,12 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models import Q
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.http import urlencode
 from webapp.models import Ad
-from webapp.forms import AdForm
-from django.http import JsonResponse
+from webapp.forms import AdForm, AdDeleteForm
+from django.http import JsonResponse, HttpResponseRedirect
 
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 
 class AdIndexViews(ListView):
@@ -45,4 +46,16 @@ class AdDeleteView(DeleteView):
     template_name = 'ad/ad_delete.html'
     model = Ad
     success_url = reverse_lazy('webapp:ad_index')
+    form_class = AdDeleteForm
 
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.form_class(instance=self.object, data=request.POST)
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_invalid(self, form):
+        form.instance.status = 'For removal'
+        return self.get_success_url('webapp:ad_index')

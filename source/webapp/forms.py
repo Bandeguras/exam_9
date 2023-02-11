@@ -1,4 +1,6 @@
 from django import forms
+from django.core.exceptions import ValidationError
+
 from webapp.models import Ad
 
 
@@ -15,3 +17,15 @@ class AdForm(forms.ModelForm):
                 'required': 'Поле должно быть заполнено'
             }
         }
+
+
+class AdDeleteForm(forms.ModelForm):
+    class Meta:
+        model = Ad
+        fields = ['title']
+
+    def clean_title(self):
+        title = self.cleaned_data['title']
+        if self.instance.title != title:
+            raise ValidationError('Названия не совпадают')
+        return title

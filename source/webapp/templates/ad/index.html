@@ -10,23 +10,5 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Ads</h1>
-    <div class="row">
-        {% for ad in ads %}
-            <div class="col-4 my-3">
-                <div class="card">
-                    <div class="card-body">
-                        {% if ad.photo %}
-                        <img src="{{ ad.photo.url }}">
-                        {% endif %}
-                        <h5 class="card-title">Заголовок: {{ ad.title }} </h5>
-                        <p class="card-text">Автор: {{ ad.user }}</p>
-                        <p class="card-text">Цена: {{ ad.price }}</p>
-                        <a href="{{ ad.get_absolute_url }}" class="btn btn-primary">Подробнее...</a>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-
+    {% include 'partial/ad_list_partial.html' %}
 {% endblock %}
