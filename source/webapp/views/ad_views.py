@@ -36,17 +36,25 @@ class AdCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class AdUpdateView(UpdateView):
+class AdUpdateView(PermissionRequiredMixin, UpdateView):
     template_name = "ad/ad_update.html"
     model = Ad
     form_class = AdForm
+    permission_required = 'webapp.change_ad'
+
+    def has_permission(self):
+        return super().has_permission() or self.get_object().author == self.request.user
 
 
-class AdDeleteView(DeleteView):
+class AdDeleteView(PermissionRequiredMixin, DeleteView):
     template_name = 'ad/ad_delete.html'
     model = Ad
     success_url = reverse_lazy('webapp:ad_index')
     form_class = AdDeleteForm
+    permission_required = 'webapp.delete_ad'
+
+    def has_permission(self):
+        return super().has_permission() or self.get_object().author == self.request.user
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -58,4 +66,4 @@ class AdDeleteView(DeleteView):
 
     def form_invalid(self, form):
         form.instance.status = 'For removal'
-        return self.get_success_url('webapp:ad_index')
+        return self.get_success_url()
