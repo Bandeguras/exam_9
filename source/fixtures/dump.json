@@ -1,0 +1,124 @@
+[
+{
+    "model": "webapp.ad",
+    "pk": 1,
+    "fields": {
+        "photo": "product_photo/Без_названия.jpeg",
+        "title": "public2",
+        "description": "Ad1 AddAddAddAddAddAdd",
+        "user": 1,
+        "category": 1,
+        "price": "5500.00",
+        "status": "published",
+        "created_at": "2023-02-11T06:13:19.484Z",
+        "updated_at": "2023-02-11T06:13:19.484Z",
+        "published_at": "2023-02-11T06:13:10Z"
+    }
+},
+{
+    "model": "webapp.ad",
+    "pk": 23,
+    "fields": {
+        "photo": "",
+        "title": "public",
+        "description": "dasdasdassssssssssssasssss",
+        "user": 1,
+        "category": 2,
+        "price": "8500.00",
+        "status": "published",
+        "created_at": "2023-02-11T10:12:55.188Z",
+        "updated_at": "2023-02-11T10:12:55.188Z",
+        "published_at": null
+    }
+},
+{
+    "model": "webapp.ad",
+    "pk": 24,
+    "fields": {
+        "photo": "",
+        "title": "deleted",
+        "description": "dasdasdassssssssssssasssss",
+        "user": 1,
+        "category": 2,
+        "price": "8500.00",
+        "status": "For removal",
+        "created_at": "2023-02-11T10:13:01.811Z",
+        "updated_at": "2023-02-11T10:13:01.811Z",
+        "published_at": null
+    }
+},
+{
+    "model": "webapp.ad",
+    "pk": 25,
+    "fields": {
+        "photo": "",
+        "title": "public22",
+        "description": "said",
+        "user": 1,
+        "category": 2,
+        "price": "8500.00",
+        "status": "published",
+        "created_at": "2023-02-11T10:13:08.352Z",
+        "updated_at": "2023-02-11T10:13:08.352Z",
+        "published_at": null
+    }
+},
+{
+    "model": "webapp.ad",
+    "pk": 27,
+    "fields": {
+        "photo": "product_photo/j6d9y6dvyo844g084kgksog8ssoggo_HX2gMdS.jpeg",
+        "title": "saaaa",
+        "description": "aaaaaaaaaaaaa",
+        "user": 2,
+        "category": 1,
+        "price": "13000.00",
+        "status": "rejected",
+        "created_at": "2023-02-11T12:11:57.965Z",
+        "updated_at": "2023-02-11T12:11:57.965Z",
+        "published_at": "2023-02-11T06:13:10Z"
+    }
+},
+{
+    "model": "webapp.category",
+    "pk": 1,
+    "fields": {
+        "name": "category 1"
+    }
+},
+{
+    "model": "webapp.category",
+    "pk": 2,
+    "fields": {
+        "name": "category 2"
+    }
+},
+{
+    "model": "webapp.category",
+    "pk": 3,
+    "fields": {
+        "name": "category 3"
+    }
+},
+{
+    "model": "webapp.category",
+    "pk": 4,
+    "fields": {
+        "name": "category 4"
+    }
+},
+{
+    "model": "accounts.profile",
+    "pk": 1,
+    "fields": {
+        "user": 2
+    }
+},
+{
+    "model": "accounts.profile",
+    "pk": 2,
+    "fields": {
+        "user": 3
+    }
+}
+]

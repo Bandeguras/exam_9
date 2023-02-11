@@ -1,6 +1,32 @@
 
-<h1>Ads</h1>
+{% extends 'base.html' %}
 
+{% load static %}
+
+{% block nav %}
+{% if request.user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'webapp:ad_create' %}">Create Ad</a>
+        </li>
+{% endif %}
+{% endblock %}
+<style>
+    .alert{
+        position: absolute;
+        right: 0px;
+        width: 300px;
+        border: 3px solid #73AD21;
+        padding: 10px;
+    }
+    .button{
+        position: absolute;
+        right: 0px;
+    }
+</style>
+{% block content %}
+    {% include 'partial/search.html' %}
+
+    <h1>Ads</h1>
     <div class="row">
         {% for ad in ads %}
             <div class="col-4 my-3">
@@ -13,11 +39,17 @@
                         <p class="card-text">Автор: <a href="{% url 'accounts:detail' ad.user.pk %}">{{ ad.user }}</a></p>
                         <p class="card-text">Цена: {{ ad.price }}</p>
                         <a href="{{ ad.get_absolute_url }}" class="btn btn-primary">Подробнее...</a>
+                        <button id="button" class="btn btn-primary" data-index-link="{% url 'webapp:dobro' ad.pk %}">Одобрить</button>
+                        <button id="button" class="btn btn-primary" data-index-link="{% url 'webapp:otklon' ad.pk %}">Отклонить</button>
                     </div>
                 </div>
             </div>
         {% endfor %}
     </div>
+    <div id="change"></div>
  {% if is_paginated %}
         {% include 'partial/pagination.html' %}
 {% endif %}
+
+
+{% endblock %}

@@ -2,14 +2,78 @@ from urllib.parse import urlencode
 
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models import Q
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from webapp.models import Ad
 from webapp.forms import AdForm, SimpleSearchForm
-from django.http import JsonResponse, HttpResponseRedirect, HttpResponseNotFound
+from django.http import JsonResponse, HttpResponseRedirect, HttpResponseNotFound, HttpResponse
 
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 
+
+class AdDobro(PermissionRequiredMixin, View):
+    permission_required = 'webapp.is_staff'
+
+    def get(self, *args, **kwargs):
+        ad = get_object_or_404(Ad, pk=self.kwargs.get('pk'))
+        ad.status = 'rejected'
+        ad.save()
+        data = {
+            'data': ad.pk
+        }
+        response = JsonResponse(data)
+        return response
+
+
+class AdOtklon(PermissionRequiredMixin, View):
+    permission_required = 'webapp.is_staff'
+
+    def get(self, *args, **kwargs):
+        ad = get_object_or_404(Ad, pk=self.kwargs.get('pk'))
+        ad.status = 'rejected'
+        ad.save()
+        data = {
+            'data': ad.pk
+        }
+        response = JsonResponse(data)
+        return response
+
+
+class AdAll(PermissionRequiredMixin, ListView):
+    template_name = 'ad/ad_all.html'
+    context_object_name = 'ads'
+    model = Ad
+    ordering = ('-created_at',)
+    paginate_by = 3
+    permission_required = 'webapp.is_staff'
+
+    def get_queryset(self):
+        queryset = Ad.objects.filter(status='on moderate')
+        if self.search_value:
+            queryset = queryset.filter(
+                Q(title__icontains=self.search_value) | Q(description__icontains=self.search_value)).filter(
+                status='on moderate')
+        return queryset
+
+    def get(self, request, *args, **kwargs):
+        self.form = self.get_search_form()
+        self.search_value = self.get_search_value()
+        return super().get(request, *args, **kwargs)
+
+    def get_search_form(self):
+        return SimpleSearchForm(self.request.GET)
+
+    def get_search_value(self):
+        if self.form.is_valid():
+            return self.form.cleaned_data['search']
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        context['form'] = self.form
+        if self.search_value:
+            context['query'] = urlencode({'search': self.search_value})
+            context['search'] = self.search_value
+        return context
 
 class AdIndexViews(ListView):
     template_name = 'ad/index.html'
@@ -21,7 +85,7 @@ class AdIndexViews(ListView):
     def get_queryset(self):
         queryset = Ad.objects.filter(status='published')
         if self.search_value:
-            queryset = queryset.filter(Q(title__icontains=self.search_value)).filter(status='published')
+            queryset = queryset.filter(Q(title__icontains=self.search_value) | Q(description__icontains=self.search_value)).filter(status='published')
         return queryset
 
     def get(self, request, *args, **kwargs):

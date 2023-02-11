@@ -27,6 +27,9 @@ class Ad(models.Model):
     def get_absolute_url(self):
         return reverse('webapp:ad_view', kwargs={'pk': self.pk})
 
+    class Meta:
+        permissions = [('is_staff', 'Модератор'), ]
+
 
 
 class Category(models.Model):
