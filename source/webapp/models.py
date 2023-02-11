@@ -28,6 +28,7 @@ class Ad(models.Model):
         return reverse('webapp:ad_view', kwargs={'pk': self.pk})
 
 
+
 class Category(models.Model):
     name = models.CharField(max_length=30, verbose_name="Статус")
 

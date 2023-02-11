@@ -37,8 +37,12 @@ class UserDetailView(LoginRequiredMixin, DetailView, MultipleObjectMixin):
 
     def get_context_data(self, **kwargs):
         ads = self.get_object().ads.all()
+        for i in ads:
+            if i.user == self.request.user:
+                ads = self.get_object().ads.all().exclude(status='For removal')
+            else:
+                ads = self.get_object().ads.all().filter(status='published')
         return super().get_context_data(object_list=ads, **kwargs)
-
 
 class UserChangeView(LoginRequiredMixin, UpdateView):
     model = get_user_model()

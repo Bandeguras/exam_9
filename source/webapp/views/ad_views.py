@@ -16,8 +16,10 @@ class AdIndexViews(ListView):
     model = Ad
     ordering = ('-created_at',)
 
+    def get_queryset(self):
+        return Ad.objects.filter(status='published')
 
-#
+
 class AdView(DetailView):
     template_name = 'ad/ad_view.html'
     context_object_name = 'ad'

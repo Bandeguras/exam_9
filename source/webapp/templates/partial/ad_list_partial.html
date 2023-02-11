@@ -5,10 +5,10 @@
                 <div class="card">
                     <div class="card-body">
                         {% if ad.photo %}
-                        <img src="{{ ad.photo.url }}">
+                        <img src="{{ ad.photo.url }}" class="img-fluid rounded-start w-75">
                         {% endif %}
                         <h5 class="card-title">Заголовок: {{ ad.title }} </h5>
-                        <p class="card-text">Автор: {{ ad.user }}</p>
+                        <p class="card-text">Автор: <a href="{% url 'accounts:detail' ad.user.pk %}">{{ ad.user }}</a></p>
                         <p class="card-text">Цена: {{ ad.price }}</p>
                         <a href="{{ ad.get_absolute_url }}" class="btn btn-primary">Подробнее...</a>
                     </div>
@@ -16,3 +16,6 @@
             </div>
         {% endfor %}
     </div>
+ {% if is_paginated %}
+        {% include 'partial/pagination.html' %}
+{% endif %}

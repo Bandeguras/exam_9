@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 {% block nav %}
 {% if request.user.is_authenticated %}
+        {% if request.user == ad.user %}
         <li class="nav-item">
             <a class="nav-link" href="{% url 'webapp:ad_update' ad.pk %}">Update Ad</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{% url 'webapp:ad_delete' ad.pk %}">Delete Ad</a>
         </li>
+        {% endif %}
         <li class="nav-item">
             <a class="nav-link" href="{% url 'webapp:ad_comment_add' ad.pk %}">Add comment</a>
         </li>
@@ -16,11 +18,14 @@
     <div class="card mb-3">
         <div class="row g-0">
                 <div class="col-md-4">
+                     {% if ad.photo %}
+                        <img src="{{ ad.photo.url }}" class="img-fluid rounded-start w-75">
+                     {% endif %}
                 </div>
             <div class="col-md-8">
                 <div class="card-body">
                     <h5 class="card-title">Заголовок: {{ ad.title }} </h5>
-                    <p class="card-text">Автор: {{ ad.user }}</p>
+                    <p class="card-text">Автор: <a href="{% url 'accounts:detail' ad.user.pk %}">{{ ad.user.pk }}</a></p>
                     <p class="card-text">Описание: {{ ad.description }}</p>
                     <p class="card-text">Категория: {{ ad.category }}</p>
                     <p class="card-text">Дата создание: {{ ad.created_at }}</p>
@@ -35,7 +40,7 @@
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-body">
-                        <p class="card-text">Автор: {{ comment.author.username }}</p>
+                        <p class="card-text">Автор: <a href="{% url 'accounts:detail' comment.author.pk %}">{{  comment.author.username }}</a></p>
                         <p class="card-text">Комментарий: {{ comment.text }}</p>
                         <p class="card-text">Дата: {{ comment.created_at }}</p>
 
