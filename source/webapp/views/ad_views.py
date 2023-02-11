@@ -23,9 +23,14 @@ class AdView(DetailView):
     context_object_name = 'ad'
     model = Ad
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        ad = self.object
+        comments = ad.comments.order_by('-created_at')
+        context['comments'] = comments
+        return context
 
-#
-#
+
 class AdCreateView(LoginRequiredMixin, CreateView):
     template_name = "ad/ad_create.html"
     model = Ad
@@ -43,7 +48,7 @@ class AdUpdateView(PermissionRequiredMixin, UpdateView):
     permission_required = 'webapp.change_ad'
 
     def has_permission(self):
-        return super().has_permission() or self.get_object().author == self.request.user
+        return super().has_permission() or self.get_object().user == self.request.user
 
 
 class AdDeleteView(PermissionRequiredMixin, DeleteView):
@@ -54,7 +59,7 @@ class AdDeleteView(PermissionRequiredMixin, DeleteView):
     permission_required = 'webapp.delete_ad'
 
     def has_permission(self):
-        return super().has_permission() or self.get_object().author == self.request.user
+        return super().has_permission() or self.get_object().user == self.request.user
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()

@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from webapp.models import Ad
+from webapp.models import Ad, Comment
 
 
 class AdForm(forms.ModelForm):
@@ -29,3 +29,9 @@ class AdDeleteForm(forms.ModelForm):
         if self.instance.title != title:
             raise ValidationError('Названия не совпадают')
         return title
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']
