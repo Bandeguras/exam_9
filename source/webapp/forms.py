@@ -1,5 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from django.forms import widgets
 
 from webapp.models import Ad, Comment
 
@@ -19,16 +20,8 @@ class AdForm(forms.ModelForm):
         }
 
 
-class AdDeleteForm(forms.ModelForm):
-    class Meta:
-        model = Ad
-        fields = ['title']
-
-    def clean_title(self):
-        title = self.cleaned_data['title']
-        if self.instance.title != title:
-            raise ValidationError('Названия не совпадают')
-        return title
+class SimpleSearchForm(forms.Form):
+    search = forms.CharField(max_length=50, required=False, label='Найти', widget=widgets.TextInput(attrs={'class': "form-control w-25"}))
 
 
 class CommentForm(forms.ModelForm):

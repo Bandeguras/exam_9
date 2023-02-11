@@ -9,9 +9,12 @@
             <a class="nav-link" href="{% url 'webapp:ad_delete' ad.pk %}">Delete Ad</a>
         </li>
         {% endif %}
+
+        {% if request.user != ad.user %}
         <li class="nav-item">
             <a class="nav-link" href="{% url 'webapp:ad_comment_add' ad.pk %}">Add comment</a>
         </li>
+        {% endif %}
 {% endif %}
 {% endblock %}
 {% block content %}
@@ -44,7 +47,7 @@
                         <p class="card-text">Комментарий: {{ comment.text }}</p>
                         <p class="card-text">Дата: {{ comment.created_at }}</p>
 
-                        {% if perms.webapp.delete_comment or comment.author == request.user %}
+                        {% if comment.author == request.user %}
                                 <a href="{% url 'webapp:comment_delete' comment.pk %}"
                                    class="btn btn-danger px-5">Delete</a>
                         {% endif %}
