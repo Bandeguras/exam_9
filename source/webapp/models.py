@@ -14,7 +14,7 @@ class Ad(models.Model):
     photo = models.ImageField(blank=True, null=True, upload_to='product_photo', verbose_name="Аватар")
     title = models.CharField(max_length=30, verbose_name="Заголовок")
     description = models.TextField(max_length=3000, verbose_name="Описание", null=True, blank=True)
-    user = models.OneToOneField(get_user_model(), on_delete=models.SET_DEFAULT, default=1, related_name='ads',
+    user = models.ForeignKey(get_user_model(), on_delete=models.SET_DEFAULT, default=1, related_name='ads',
                                verbose_name="Автор")
     category = models.ForeignKey('webapp.Category', on_delete=models.PROTECT, related_name='categories')
     price = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Цена')
@@ -22,7 +22,7 @@ class Ad(models.Model):
                                 verbose_name="Категория")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата начала")
     updated_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата обновление")
-    published_at = models.DateTimeField(verbose_name="Дата публикации")
+    published_at = models.DateTimeField(null=True, blank=True, verbose_name="Дата публикации")
 
     def get_absolute_url(self):
         return reverse('webapp:ad_view', kwargs={'pk': self.pk})

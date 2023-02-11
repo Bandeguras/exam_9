@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Delete Ad{% endblock %}
+{% block content %}
+    <h1>Are you sure want to delete article "{{ ad.title }}"?</h1>
+    <form method="POST" action="{% url "webapp:ad_delete" ad.pk %}" class="text-center">
+        {% include 'partial/form.html' with button_text="Delete" %}
+        <p><a href="{% url "webapp:ad_view" ad.pk %}">No</a></p>
+    </form>
+{% endblock %}

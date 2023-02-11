@@ -2,7 +2,11 @@
 
 
 {% block nav %}
-
+{% if request.user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'webapp:ad_create' %}">Create Ad</a>
+        </li>
+{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -12,7 +16,9 @@
             <div class="col-4 my-3">
                 <div class="card">
                     <div class="card-body">
+                        {% if ad.photo %}
                         <img src="{{ ad.photo.url }}">
+                        {% endif %}
                         <h5 class="card-title">Заголовок: {{ ad.title }} </h5>
                         <p class="card-text">Автор: {{ ad.user }}</p>
                         <p class="card-text">Цена: {{ ad.price }}</p>
